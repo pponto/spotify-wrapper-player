@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spotify Wrapper Player</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #121212;
+  font-family: 'Lato', sans-serif;
+  color: #a0a0a0;
+  display: flex;
+  overflow: hidden;
+}
+.aside {
+  background: #0f1015;
+  box-shadow: 0px 5px 8px #0f1015;
+  height: 100vh;
+  width: 350px;
+  overflow: scroll;
+}
+.aside-container {
+  padding: 20px;
+}
+.aside-header {
+  margin-bottom: 20px;
+}
+.aside-link {
+  align-items: center;
+  color: #fff;
+  display: flex;
+  height: 32px;
+  text-decoration: none;
+  transition: color .4s;
+}
+.aside-link:hover {
+  color: #1ed760;
+}
+.aside-icon {
+  margin-right: 10px;
+  width: 32px;
+}
+.aside-title {
+  font-size: 16px;
+}
+.form-wrapper {
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, .25);
+  border-bottom: 1px solid rgba(255, 255, 255, .25);
+  display: flex;
+  padding: 10px 0;
+}
+.form-input {
+  background: none;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 10px;
+  outline: none;
+  padding: 12px 20px;
+}
+.form-input:focus + .form-icon {
+  color: #1ed760;
+}
+.form-icon {
+  cursor: pointer;
+  width: 22px;
+}
+.list-item {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  min-height: 70px;
+  opacity: .7;
+  padding: 10px 20px;
+  transition: opacity .4s;
+}
+.list-item:nth-of-type(even) {
+  background: rgba(29, 32, 40, 0.61);
+}
+.list-item:hover {
+  opacity: 1;
+}
+.list-image {
+  height: 50px;
+  width: 50px;
+  margin-right: 10px;
+}
+.list-title {
+  color: #fff;
+}
+.container {
+  background-image: linear-gradient(rgb(70,76,82), rgb(7,7,8)85%);
+  height: 100vh;
+  overflow: scroll;
+  width: 100%;
+}
+.container-inner {
+  display: flex;
+  padding: 50px;
+}
+.album-info {
+  margin-right: 50px;
+  text-align: center;
+}
+.album-image {
+  width: 250px;
+  height: 250px;
+}
+.album-title {
+  color: #fff;
+  font-size: 24px;
+  margin: 20px 0 0;
+}
+.album-artist {
+  font-size: 18px;
+}
+.album-counter {
+  font-size: 14px;
+}
+.album-artist, .album-counter {
+  font-weight: 300;
+  margin-bottom: 25px;
+}
+.play-btn {
+  background: #1ed760;
+  border-radius: 30px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 13px 44px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background .3s;
+}
+.play-btn:hover {
+  background: #16a248;
+}
+.album-musics {
+  width: 100%;
+}
+.music {
+  cursor: pointer;
+  display: flex;
+  font-size: 18px;
+  font-weight: 300;
+  transition: background .3s;
+  width: 100%;
+}
+.music.active {
+  color: #16a248;
+}
+.music.active .music-title {
+  color: #16a248;
+}
+.music:hover {
+  background: #000;
+}
+.music-number,
+.music-title,
+.music-duration {
+  padding: 10px;
+}
+.music-number {
+  margin-right: 20px;
+  min-width: 25px;
+}
+.music-number:after {
+  content: '.';
+}
+.music-title {
+  color: rgba(255, 255, 255, 0.81);
+  width: 100%;
+}
+.music-duration {
+  text-align: right;
+  width: 100%;
+}
+</style>
+</head>
+<body>
+<aside class="aside">
+  <div class="aside-container">
+    <header class="aside-header">
+      <a class="aside-link" href="#">
+        <svg class="aside-icon" viewBox="0 0 167.5 167.5">
+          <title>Spotify</title>
+          <path fill="currentColor" d="M83.7 0C37.5 0 0 37.5 0 83.7c0 46.3 37.5 83.7 83.7 83.7 46.3 0 83.7-37.5 83.7-83.7S130 0 83.7 0zM122 120.8c-1.4 2.5-4.6 3.2-7 1.7-19.8-12-44.5-14.7-73.7-8-2.8.5-5.6-1.2-6.2-4-.2-2.8 1.5-5.6 4-6.2 32-7.3 59.6-4.2 81.6 9.3 2.6 1.5 3.4 4.7 1.8 7.2zM132.5 98c-2 3-6 4-9 2.2-22.5-14-56.8-18-83.4-9.8-3.2 1-7-1-8-4.3s1-7 4.6-8c30.4-9 68.2-4.5 94 11 3 2 4 6 2 9zm1-23.8c-27-16-71.6-17.5-97.4-9.7-4 1.3-8.2-1-9.5-5.2-1.3-4 1-8.5 5.2-9.8 29.6-9 78.8-7.2 109.8 11.2 3.7 2.2 5 7 2.7 10.7-2 3.8-7 5-10.6 2.8z"></path>
+          <h1 class="aside-title">Spotify-Wrapper</h1>
+        </svg>
+      </a>
+    </header>
+
+    <form id="search-form" class="form-wrapper">
+      <input id="search-input" class="form-input" type="text" name="query" placeholder="Type an artist/album" autocomplete="off">
+      <svg class="form-icon" viewBox="0 0 27 28" xmlns="http://www.w3.org/2000/svg"><title>Search</title><path d="M18.387 16.623C19.995 15.076 21 12.907 21 10.5 21 5.806 17.195 2 12.5 2 7.806 2 4 5.806 4 10.5S7.806 19 12.5 19c1.927 0 3.7-.65 5.125-1.73l4.4 5.153.76-.65-4.398-5.15zM12.5 18C8.364 18 5 14.636 5 10.5S8.364 3 12.5 3 20 6.364 20 10.5 16.636 18 12.5 18z" fill="currentColor" fill-rule="evenodd" stroke-width="2"></path></svg>
+    </form>
+  </div>
+
+  <div id="album-list" class="list"></div>
+</aside>
+
+<main class="container">
+  <div class="container-inner">
+    <div id="album-info" class="album-info"></div>
+    <div id="album-tracks" class="album-musics"></div>
+  </div>
+</main>
+
+<script>
+  !function(t){function e(u){if(n[u])return n[u].exports;var i=n[u]={i:u,l:!1,exports:{}};return t[u].call(i.exports,i,i.exports,e),i.l=!0,i.exports}var n={};e.m=t,e.c=n,e.i=function(t){return t},e.d=function(t,n,u){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:u})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=8)}([function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var u=n(11),i=function(t){return t&&t.__esModule?t:{default:t}}(u),a=new i.default({token:"BQCFNwD3YNecIfrqQgBtFm2wHmV73wXmPDut8b29XoWRAGHR3Nb15opcWu_03WGTPj6UOcBG3WSGlQwWlYjCXK3Zh45kuAI540_ihYJx3XjaEPIivaHA6VxW4aVFqDEIcyesxA"});e.default=a},function(t,e,n){"use strict";function u(){i.addEventListener("click",function(t){var e=t.target.parentNode;e.classList.contains("active")?a.pause():(a&&a.pause(),a=new Audio(e.getAttribute("data-track-preview")),a.play(),e.classList.add("active"),a.addEventListener("pause",function(){e.classList.remove("active")}))})}Object.defineProperty(e,"__esModule",{value:!0}),e.default=u;var i=document.getElementById("album-tracks"),a=null},function(t,e,n){"use strict";function u(t){return t&&t.__esModule?t:{default:t}}function i(){s.default.search.albums(d.value).then(function(t){return(0,c.default)(t.albums.items,o)})}function a(){f.addEventListener("submit",function(t){t.preventDefault(),i()})}Object.defineProperty(e,"__esModule",{value:!0}),e.default=a;var r=n(0),s=u(r),l=n(5),c=u(l),o=document.getElementById("album-list"),d=document.getElementById("search-input"),f=document.getElementById("search-form")},function(t,e,n){"use strict";function u(t){return t&&t.__esModule?t:{default:t}}function i(t){s.default.album.getAlbum(t).then(function(t){return(0,c.default)(t,m)}).then(function(t){return(0,d.default)(t.tracks.items,p)})}function a(){f.addEventListener("click",function(t){i(t.target.getAttribute("data-album-id"))})}Object.defineProperty(e,"__esModule",{value:!0}),e.default=a;var r=n(0),s=u(r),l=n(4),c=u(l),o=n(6),d=u(o),f=document.getElementById("album-list"),m=document.getElementById("album-info"),p=document.getElementById("album-tracks")},function(t,e,n){"use strict";function u(t){return'\n    <img class="album-image" src="'+t.images[0].url+'" alt="'+t.name+'">\n    <p class="album-title">'+t.name+'</p>\n    <p class="album-artist">'+t.artists[0].name+'</p>\n    <p class="album-counter">'+t.tracks.total+" Músicas</p>\n  "}function i(t,e){var n=u(t);return e.innerHTML=n,t}Object.defineProperty(e,"__esModule",{value:!0}),e.default=i},function(t,e,n){"use strict";function u(t){return t.map(function(t){return'\n    <div class="list-item" data-album-id="'+t.id+'">\n      <img src="'+t.images[2].url+'" alt="'+t.name+'" class="list-image" data-album-id="'+t.id+'">\n      <div class="list-description" data-album-id="'+t.id+'">\n        <p class="list-title" data-album-id="'+t.id+'">'+t.name+'</p>\n        <p class="list-subtitle" data-album-id="'+t.id+'">'+t.artists[0].name+"</p>\n      </div>\n    </div>"}).join("")}function i(t,e){var n=u(t);e.innerHTML=n}Object.defineProperty(e,"__esModule",{value:!0}),e.default=i},function(t,e,n){"use strict";function u(t){return t.map(function(t){return'\n    <div class="music" data-track-preview="'+t.preview_url+'">\n      <p class="music-number">'+t.track_number+'</p>\n      <p class="music-title">'+t.name+'</p>\n      <p class="music-duration">'+(0,r.default)(t.duration_ms)+"</p>\n    </div>"}).join("")}function i(t,e){var n=u(t);e.innerHTML=n}Object.defineProperty(e,"__esModule",{value:!0}),e.default=i;var a=n(7),r=function(t){return t&&t.__esModule?t:{default:t}}(a)},function(t,e,n){"use strict";function u(t){var e=parseInt(t/1e3%60,10),n=parseInt(t/6e4%60,10);return e=e<10?"0"+e:e,n+":"+e}Object.defineProperty(e,"__esModule",{value:!0}),e.default=u},function(t,e,n){"use strict";function u(t){return t&&t.__esModule?t:{default:t}}var i=n(2),a=u(i),r=n(3),s=u(r),l=n(1),c=u(l);(0,a.default)(),(0,s.default)(),(0,c.default)()},function(t,e,n){"use strict";function u(){var t=this;return{getAlbum:function(e){return t.request(t.apiURL+"/albums/"+e)},getAlbums:function(e){return t.request(t.apiURL+"/albums/?ids="+e)},getTracks:function(e){return t.request(t.apiURL+"/albums/"+e+"/tracks")}}}Object.defineProperty(e,"__esModule",{value:!0}),e.default=u},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});e.default="https://api.spotify.com/v1"},function(t,e,n){"use strict";function u(t){return t&&t.__esModule?t:{default:t}}function i(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(e,"__esModule",{value:!0});var a=function(){function t(t,e){for(var n=0;n<e.length;n++){var u=e[n];u.enumerable=u.enumerable||!1,u.configurable=!0,"value"in u&&(u.writable=!0),Object.defineProperty(t,u.key,u)}}return function(e,n,u){return n&&t(e.prototype,n),u&&t(e,u),e}}(),r=n(12),s=u(r),l=n(9),c=u(l),o=n(10),d=u(o),f=n(13),m=u(f),p=function(){function t(e){i(this,t),this.apiURL=e.apiURL||d.default,this.token=e.token,this.album=c.default.bind(this)(),this.search=s.default.bind(this)()}return a(t,[{key:"request",value:function(t){var e={headers:{Authorization:"'Bearer "+this.token+"'"}};return fetch(t,e).then(m.default)}}]),t}();e.default=p},function(t,e,n){"use strict";function u(t,e){return this.request(this.apiURL+"/search?q="+e+"&type="+t)}function i(){return{artists:u.bind(this,"artist"),albums:u.bind(this,"album"),tracks:u.bind(this,"track"),playlists:u.bind(this,"playlist")}}Object.defineProperty(e,"__esModule",{value:!0}),e.default=i},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var u=function(t){return t.json()};e.default=u}]);
+</script>
+</body>
+</html>
